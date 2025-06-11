@@ -1,1 +1,112 @@
 # elderlycare_backend
+
+- API ENDPOINTS DOCUMENTATION
+-
+- BASE URL: http://localhost:5000/api
+-
+- AUTHENTICATION ENDPOINTS
+- ========================
+-
+- 1.  Send OTP
+- POST /auth/send-otp
+- Body: { "email": "user@example.com" }
+- Response: { "success": true, "message": "OTP sent successfully", "data": { "isNewUser": false, "email": "us\*\*\*@example.com" } }
+-
+- 2.  Register User
+- POST /auth/register
+- Body: {
+- "firstName": "John",
+- "lastName": "Doe",
+- "email": "user@example.com",
+- "phoneNumber": "+1234567890",
+- "dateOfBirth": "1990-01-01",
+- "otp": "123456"
+- }
+- Response: {
+- "success": true,
+- "message": "User registered successfully",
+- "data": {
+-     "user": { ... },
+-     "accessToken": "...",
+-     "refreshToken": "...",
+-     "tokenExpiry": { "accessToken": "1h", "refreshToken": "7d" }
+- }
+- }
+-
+- 3.  Login
+- POST /auth/login
+- Body: { "email": "user@example.com", "otp": "123456" }
+- Response: Same as register
+-
+- 4.  Refresh Token
+- POST /auth/refresh-token
+- Body: { "refreshToken": "..." }
+- Response: New tokens + user data
+-
+- 5.  Logout
+- POST /auth/logout
+- Headers: { "Authorization": "Bearer <accessToken>" }
+- Body: { "refreshToken": "..." }
+- Response: { "success": true, "message": "Logged out successfully" }
+-
+- 6.  Logout from All Devices
+- POST /auth/logout-all
+- Headers: { "Authorization": "Bearer <accessToken>" }
+- Response: { "success": true, "message": "Logged out from all devices successfully" }
+-
+- USER ENDPOINTS
+- ==============
+-
+- 1.  Get Profile
+- GET /user/profile
+- Headers: { "Authorization": "Bearer <accessToken>" }
+- Response: { "success": true, "message": "Profile retrieved successfully", "data": { "user": { ... } } }
+-
+- 2.  Update Profile
+- PUT /user/profile
+- Headers: { "Authorization": "Bearer <accessToken>" }
+- Body: {
+- "firstName": "John",
+- "lastName": "Doe",
+- "phoneNumber": "+1234567890",
+- "dateOfBirth": "1990-01-01"
+- }
+- Response: Updated user data
+-
+- ERROR RESPONSES
+- ===============
+- All error responses follow this format:
+- {
+- "success": false,
+- "message": "Error description",
+- "timestamp": "2025-06-11T10:30:00.000Z",
+- "error": "Additional error details (optional)"
+- }
+-
+- RATE LIMITS
+- ===========
+- - OTP requests: 3 per minute
+- - Auth operations: 10 per 15 minutes
+- - Token refresh: 5 per minute
+- - General API: 100 per 15 minutes
+-
+- SECURITY FEATURES
+- =================
+- - JWT tokens with rotation
+- - Token blacklisting
+- - OTP expiry (5 minutes)
+- - Rate limiting
+- - Input validation
+- - CORS protection
+- - Helmet security headers
+- - Refresh token cleanup (max 5 per user)
+-
+- AUTHENTICATION FLOW
+- ===================
+- 1.  User enters email → Send OTP
+- 2.  User enters OTP → Login/Register
+- 3.  Server returns access token (1h) + refresh token (7d)
+- 4.  Use access token for API calls
+- 5.  When access token expires, use refresh token to get new tokens
+- 6.  Old refresh token is blacklisted, new one is issued (token rotation)
+- 7.  On logout, tokens are blacklisted
