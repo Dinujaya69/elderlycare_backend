@@ -10,8 +10,9 @@ const createTransporter = () => {
   });
 };
 
+// Fixed: Added return statement
 export const generateOTP = () => {
-  Math.floor(10000 + Math.random() * 90000).toString();
+  return Math.floor(10000 + Math.random() * 90000).toString();
 };
 
 export const sendOTPEmail = async (email, otp, isNewUser = false) => {
@@ -28,7 +29,7 @@ export const sendOTPEmail = async (email, otp, isNewUser = false) => {
 
     const mailOptions = {
       from: {
-        name: "Your App Name",
+        name: "ElderlyCare",
         address: process.env.EMAIL_USER,
       },
       to: email,
@@ -37,31 +38,37 @@ export const sendOTPEmail = async (email, otp, isNewUser = false) => {
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
           <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
             <div style="text-align: center; margin-bottom: 30px;">
-              <h1 style="color: #333; margin: 0;">ElderlyCare</h1>
+              <h1 style="color: #2c3e50; margin: 0; font-size: 28px;">ElderlyCare</h1>
             </div>
             
-            <div style="margin-bottom: 20px;">
-              <h2 style="color: #333; margin-bottom: 10px;">${greeting}</h2>
-              <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">${message}</p>
-              
-              <div style="text-align: center; margin: 30px 0;">
-                <div style="background-color: #007bff; color: white; padding: 15px 30px; border-radius: 5px; display: inline-block; font-size: 24px; font-weight: bold; letter-spacing: 2px;">
-                  ${otp}
-                </div>
+            <div style="text-align: center; margin-bottom: 30px;">
+              <h2 style="color: #34495e; margin: 0 0 10px 0; font-size: 24px;">${greeting}</h2>
+              <p style="color: #7f8c8d; margin: 0; font-size: 16px; line-height: 1.5;">${message}</p>
+            </div>
+            
+            <div style="text-align: center; margin: 30px 0;">
+              <div style="background-color: #3498db; color: white; font-size: 32px; font-weight: bold; padding: 20px; border-radius: 8px; letter-spacing: 5px; display: inline-block; min-width: 200px;">
+                ${otp}
               </div>
-              
-              <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; border-radius: 5px; padding: 15px; margin: 20px 0;">
-                <p style="color: #856404; margin: 0; font-weight: bold;">⚠️ Important: This OTP will expire in 5 minutes. Do not share this code with anyone.</p>
-              </div>
-              
-              <p style="color: #666; line-height: 1.6; font-size: 14px;">
-                If you didn't request this OTP, please ignore this email or contact our support team.
+            </div>
+            
+            <div style="text-align: center; margin: 30px 0;">
+              <p style="color: #e74c3c; margin: 0; font-size: 14px; font-weight: 500;">
+                ⚠️ Important: This OTP will expire in 5 minutes. Do not share this code with anyone.
               </p>
             </div>
             
-            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
-              <p style="color: #999; font-size: 12px; margin: 0;">© 2025 Your App Name. All rights reserved.</p>
+            <div style="text-align: center; margin-top: 30px;">
+              <p style="color: #95a5a6; margin: 0; font-size: 12px;">
+                If you didn't request this OTP, please ignore this email or contact our support team.
+              </p>
             </div>
+          </div>
+          
+          <div style="text-align: center; margin-top: 20px;">
+            <p style="color: #95a5a6; margin: 0; font-size: 12px;">
+              © 2025 ElderlyCare. All rights reserved.
+            </p>
           </div>
         </div>
       `,

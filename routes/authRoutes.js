@@ -34,7 +34,7 @@ const registerValidation = [
   body("dateOfBirth")
     .isISO8601()
     .withMessage("Valid date of birth is required"),
-  body("otp").isLength({ min: 6, max: 6 }).withMessage("OTP must be 6 digits"),
+  body("otp").isLength({ min: 5, max: 5 }).withMessage("OTP must be 5 digits"),
 ];
 
 const loginValidation = [
@@ -42,7 +42,7 @@ const loginValidation = [
     .isEmail()
     .normalizeEmail()
     .withMessage("Valid email is required"),
-  body("otp").isLength({ min: 6, max: 6 }).withMessage("OTP must be 6 digits"),
+  body("otp").isLength({ min: 5, max: 5 }).withMessage("OTP must be 5 digits"),
 ];
 
 // Routes
