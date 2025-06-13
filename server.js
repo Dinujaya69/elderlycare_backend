@@ -18,6 +18,7 @@ const app = express();
 app.use(helmet());
 app.use(cors());
 connectDB();
+
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -34,7 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 
-// Error handling middleware
+
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
